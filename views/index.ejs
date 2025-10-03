@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Система управления продуктами</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .actions { display: flex; gap: 10px; }
+        .btn { padding: 5px 10px; text-decoration: none; border-radius: 3px; }
+        .btn-edit { background: #ffc107; color: #000; }
+        .btn-delete { background: #dc3545; color: white; }
+        .btn-add { background: #28a745; color: white; padding: 10px 15px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Система управления продуктами</h1>
+    
+    <% if (user) { %>
+        <div>
+            <p>Вы вошли как: <strong><%= user.username %></strong> (<%= user.role %>)
+               <a href="/logout" style="margin-left: 20px;">Выйти</a>
+            </p>
+        </div>
+        
+        <div>
+            <% if (user.role === 'admin' || user.role === 'manager') { %>
+                <a href="/add-product" class="btn btn-add">Добавить продукт</a>
+                <a href="/add-category" class="btn btn-add">Добавить категорию</a>
+                <a href="/add-supplier" class="btn btn-add">Добавить поставщика</a>
+            <% } %>
+        </div>
+
+        <h2>Список продуктов</h2>
+        <% if (products && products.length > 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+                        <th>Цена</th>
+                        <th>Категория</th>
+                        <th>Поставщик</th>
+                        <% if (user.role === 'admin' || user.role === 'manager') { %>
+                            <th>Действия</th>
+                        <% } %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% products.forEach(product => { %>
+                        <tr>
+                            <td><%= product.id %></td>
+                            <td><%= product.name %></td>
+                            <td>$<%= product.price.toFixed(2) %></td>
+                            <td><%= product.Category ? product.Category.name : 'Нет категории' %></td>
+                            <td><%= product.Supplier ? product.Supplier.name : 'Нет поставщика' %></td>
+                            <% if (user.role === 'admin' || user.role === 'manager') { %>
+                                <td class="actions">
+                                    <a href="/edit-product/<%= product.id %>" class="btn btn-edit">Редактировать</a>
+                                    <% if (user.role === 'admin') { %>
+                                        <form action="/delete-product/<%= product.id %>" method="POST" style="display: inline;">
+                                            <button type="submit" class="btn btn-delete" 
+                                                    onclick="return confirm('Удалить продукт?')">Удалить</button>
+                                        </form>
+                                    <% } %>
+                                </td>
+                            <% } %>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>Продукты не найдены</p>
+        <% } %>
+
+    <% } else { %>
+        <div>
+            <p>Для доступа к системе необходимо <a href="/login">войти</a> или <a href="/register">зарегистрироваться</a></p>
+        </div>
+    <% } %>
+
+</body>
+</html>

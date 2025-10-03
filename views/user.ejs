@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Панель пользователя</title>
+</head>
+<body>
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h1>Панель пользователя</h1>
+            <div>
+                <span>Вы вошли как: <strong><%= user.username %></strong> (<%= user.Role.name %>)</span>
+                <a href="/logout" class="btn btn-danger" style="margin-left: 1rem;">Выйти</a>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <a href="/" class="btn btn-primary">Главная страница</a>
+        </div>
+        <div style="margin-top: 2rem;">
+            <h2>Каталог продуктов</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Название</th>
+                            <th>Цена</th>
+                            <th>Категория</th>
+                            <th>Поставщик</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% products.forEach(product => { %>
+                        <tr>
+                            <td><%= product.name %></td>
+                            <td>$<%= product.price.toFixed(2) %></td>
+                            <td><%= product.Category.name %></td>
+                            <td><%= product.Supplier.name %></td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
