@@ -20,6 +20,15 @@ app.use(session({
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.get('/catalog', (req, res) => {
+    res.render('catalog');
+});
+
+app.get('/cart', (req, res) => {
+    res.render('cart');
+});
+
+
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -163,7 +172,7 @@ app.get('/add-category', requireAuth, requireRole(['admin', 'manager']), (req, r
 app.get('/add-supplier', requireAuth, requireRole(['admin', 'manager']), (req, res) => {
     res.render('add-supplier', { user: req.session.user });
 });
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 app.get('/add-product', requireAuth, requireRole(['admin', 'manager']), async (req, res) => {
     try {
         const categories = await Category.findAll();
@@ -273,6 +282,10 @@ app.post('/edit-product/:id', requireAuth, requireRole(['admin', 'manager']), as
         console.error('Ошибка при обновлении продукта:', error);
         res.status(500).send('Внутренняя ошибка сервера');
     }
+});
+
+app.use((req, res, next) => {
+    res.status(404).render('404');
 });
 
 (async () => {

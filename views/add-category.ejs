@@ -3,29 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles.css">
     <title>Добавить категорию</title>
+    <style>
+        /* Стили такие же как в edit-product.ejs */
+        :root {
+            --primary: #f59e0b;
+            --primary-hover: #d97706;
+            --danger: #ef4444;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --border: #e5e7eb;
+            --background: #f9fafb;
+            --white: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.05);
+            --radius: 6px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .user-bar {
+            background: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: 0 1px 3px var(--shadow);
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-info {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        .user-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .link {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+
+        .link:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: var(--text);
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .form {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: all 0.2s;
+            background-color: var(--white);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn--primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn--primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn--secondary {
+            background-color: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--border);
+        }
+
+        .btn--secondary:hover {
+            background-color: var(--background);
+            color: var(--text);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
-    <div>
-        <p>Вы вошли как: <strong><%= user.username %></strong> (<%= user.role %>)
-        <a href="/" style="margin-left: 20px;">На главную</a>
-        <a href="/logout" style="margin-left: 10px;">Выйти</a>
-        </p>
+    <div class="user-bar">
+        <div class="user-info">
+            Вы вошли как: <strong><%= user.username %></strong> (<%= user.role %>)
+        </div>
+        <div class="user-links">
+            <a href="/" class="link">На главную</a>
+            <a href="/logout" class="link">Выйти</a>
+        </div>
     </div>
+
     <div class="container">
-        <h1>Добавить новую категорию</h1>
+        <div class="header">
+            <h1>Добавить новую категорию</h1>
+        </div>
         
         <form action="/add-category" method="POST" class="form">
             <div class="form-group">
-                <label for="name">Название категории:</label>
-                <input type="text" id="name" name="name" required>
+                <label for="name" class="form-label">Название категории:</label>
+                <input type="text" id="name" name="name" class="form-input" required>
             </div>
 
-            <button type="submit" class="submit-btn">Сохранить</button>
+            <div class="form-actions">
+                <button type="submit" class="btn btn--primary">Сохранить</button>
+                <a href="/" class="btn btn--secondary">Назад к списку</a>
+            </div>
         </form>
-
-        <button onclick="window.location.href='/'" class="back-btn">Назад к списку</button>
     </div>
 </body>
 </html>

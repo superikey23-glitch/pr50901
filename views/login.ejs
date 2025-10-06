@@ -2,24 +2,144 @@
 <html>
 <head>
     <title>Вход</title>
+    <style>
+    :root {
+        --primary: #f59e0b;       /* Оранжевый (акцентный) */
+        --primary-hover: #d97706;
+        --danger: #ef4444;        /* Красный (ошибка) */
+        --text: #1f2937;          /* Темный текст */
+        --text-light: #6b7280;    /* Светлый текст */
+        --border: #e5e7eb;        /* Границы */
+        --background: #f9fafb;    /* Фон */
+        --white: #ffffff;         /* Белый */
+        --shadow: rgba(0, 0, 0, 0.05);
+        --radius: 6px;            /* Скругления */
+    }
+
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background-color: var(--background);
+        color: var(--text);
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .login-container {
+        background: var(--white);
+        padding: 40px;
+        border-radius: var(--radius);
+        box-shadow: 0 4px 15px var(--shadow);
+        width: 100%;
+        max-width: 400px;
+    }
+
+    h1 {
+        color: var(--primary);
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 28px;
+    }
+
+    .error-message {
+        color: var(--danger);
+        text-align: center;
+        margin-bottom: 20px;
+        background-color: rgba(239, 68, 68, 0.1);
+        padding: 10px;
+        border-radius: var(--radius);
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    label {
+        color: var(--text);
+        font-weight: 500;
+    }
+
+    input {
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        font-size: 16px;
+        transition: border-color 0.2s;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+    }
+
+    button {
+        background-color: var(--primary);
+        color: var(--white);
+        border: none;
+        padding: 12px;
+        border-radius: var(--radius);
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    button:hover {
+        background-color: var(--primary-hover);
+    }
+
+    .links {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    .links a {
+        color: var(--primary);
+        text-decoration: none;
+    }
+
+    .links a:hover {
+        text-decoration: underline;
+    }
+</style>
+
 </head>
 <body>
-    <h1>Вход в систему</h1>
-    <% if (error) { %>
-        <p style="color: red;"><%= error %></p>
-    <% } %>
-    <form method="POST" action="/login">
-        <div>
-            <label>Имя пользователя:</label>
-            <input type="text" name="username" required>
+    <div class="login-container">
+        <h1>Вход в систему</h1>
+        <% if (error) { %>
+            <p class="error-message"><%= error %></p>
+        <% } %>
+        <form method="POST" action="/login">
+            <div class="form-group">
+                <label>Имя пользователя:</label>
+                <input type="text" name="username" required>
+            </div>
+            <div class="form-group">
+                <label>Пароль:</label>
+                <input type="password" name="password" required>
+            </div>
+            <button type="submit">Войти</button>
+        </form>
+        <div class="links">
+            <a href="/register">Регистрация</a>
+            <a href="/">На главную</a>
         </div>
-        <div>
-            <label>Пароль:</label>
-            <input type="password" name="password" required>
-        </div>
-        <button type="submit">Войти</button>
-    </form>
-    <p><a href="/register">Регистрация</a></p>
-    <p><a href="/">На главную</a></p>
+    </div>
 </body>
 </html>
